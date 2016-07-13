@@ -8,7 +8,7 @@ import globalArg from 'command-line-boilerplate/lib/GlobalArg';
 import runCli from 'command-line-boilerplate/lib/CliRunner';
 import outputHelp from 'command-line-boilerplate/lib/OutputHelp';
 import DiscoveryServer from './DiscoveryServer';
-import loadPlugin from './DiscoveryPluginLoader';
+import loadPlugin from 'plugin-boilerplate/lib/PluginLoader';
 
 globalOption('-c, --config [CONFIG]', 'Path to JSON / YAML based environment configs, such as esConfig, redisConfig etc');
 

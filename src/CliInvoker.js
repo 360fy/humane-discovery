@@ -2,17 +2,15 @@ import 'babel-polyfill';
 import _ from 'lodash';
 import Path from 'path';
 import Promise from 'bluebird';
-
 import Config from 'config-boilerplate/lib/Config';
-
 import globalOption from 'command-line-boilerplate/lib/GlobalOption';
 import globalArg from 'command-line-boilerplate/lib/GlobalArg';
 import runCli from 'command-line-boilerplate/lib/CliRunner';
 import outputHelp from 'command-line-boilerplate/lib/OutputHelp';
-
 import cli from './Cli';
+import loadPlugin from 'plugin-boilerplate/lib/PluginLoader';
 
-import loadPlugin from './DiscoveryPluginLoader';
+import ValidationError from 'humane-node-commons/lib/ValidationError';
 
 globalOption('-c, --config [CONFIG]', 'Path to JSON / YAML based environment configs, such as esConfig, redisConfig etc');
 
@@ -32,7 +30,7 @@ function validDiscoveryPlugin(path, throwError) {
         return null;
     }
 
-    return loadPlugin(path, throwError);
+    return loadPlugin(process.env.MODULE_ROOT, path, throwError);
 }
 
 Promise.resolve(globalArg('discoveryPlugin'))
@@ -54,7 +52,7 @@ Promise.resolve(globalArg('discoveryPlugin'))
   .then(plugin => {
       if (!plugin) {
           console.error('No plugin was specified or found');
-          
+
           outputHelp();
 
           return false;
@@ -65,4 +63,7 @@ Promise.resolve(globalArg('discoveryPlugin'))
         : new Config('default', Path.join(__dirname, '..', 'config'));
 
       return cli(_.defaultsDeep({}, plugin, defaultConfig));
+  })
+  .catch((error) => error.name === 'ValidationError' || error instanceof ValidationError, (error) => {
+      console.error('VALIDATION ERROR: ', error.message);
   });
