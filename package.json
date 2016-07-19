@@ -31,7 +31,7 @@
     "md5": "2.1.0",
     "mkdirp": "0.5.1",
     "node-sass": "3.8.0",
-    "plugin-boilerplate": "1.0.2",
+    "plugin-boilerplate": "1.1.0",
     "webpack-builder-boilerplate": "1.2.2"
   },
   "devDependencies": {
