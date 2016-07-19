@@ -44,10 +44,10 @@ function validDiscoveryPlugin(pathOrMultiPath, throwError) {
           .split(',')
           .map(path => _.trim(path))
           .value();
-        return Promise.all(_.map(paths, path => loadPlugin(path, throwError)));
+        return Promise.all(_.map(paths, path => loadPlugin(process.env.MODULE_ROOT, path, throwError)));
     }
 
-    return loadPlugin(pathOrMultiPath, throwError);
+    return loadPlugin(process.env.MODULE_ROOT, pathOrMultiPath, throwError);
 }
 
 // TODO: setup watcher for plugin changes
