@@ -9,6 +9,7 @@ import routesBuilder from 'humane-cockpit/lib/app/Routes';
 import mkdirp from 'mkdirp';
 import buildServer from 'expressjs-boilerplate/lib/server/Server';
 import md5 from 'md5';
+import 'heapdump';
 
 //
 // cli specific includes
