@@ -2,13 +2,15 @@ import 'babel-polyfill';
 import _ from 'lodash';
 import Path from 'path';
 import Promise from 'bluebird';
+
 import Config from 'config-boilerplate/lib/Config';
 import globalOption from 'command-line-boilerplate/lib/GlobalOption';
 import globalArg from 'command-line-boilerplate/lib/GlobalArg';
 import runCli from 'command-line-boilerplate/lib/CliRunner';
 import outputHelp from 'command-line-boilerplate/lib/OutputHelp';
-import DiscoveryServer from './DiscoveryServer';
 import loadPlugin from 'plugin-boilerplate/lib/PluginLoader';
+
+import DiscoveryServer from './DiscoveryServer';
 
 globalOption('-c, --config [CONFIG]', 'Path to JSON / YAML based environment configs, such as esConfig, redisConfig etc');
 
@@ -53,21 +55,21 @@ function validDiscoveryPlugin(pathOrMultiPath, throwError) {
 // TODO: setup watcher for plugin changes
 Promise.resolve(globalArg('discoveryPlugin'))
   .then(pluin => validDiscoveryPlugin(pluin, true))
-  .then(plugin => {
+  .then((plugin) => {
       if (!plugin) {
           return validDiscoveryPlugin(process.cwd());
       }
 
       return plugin;
   })
-  .then(plugin => {
+  .then((plugin) => {
       if (!plugin) {
           return validDiscoveryPlugin(process.env.HUMANE_PLUGIN_DISCOVERY, true);
       }
 
       return plugin;
   })
-  .then(pluginOrArray => {
+  .then((pluginOrArray) => {
       if (!pluginOrArray) {
           console.error('No plugin was specified or found');
 
@@ -87,10 +89,11 @@ Promise.resolve(globalArg('discoveryPlugin'))
         globalArg('port') || process.env.HUMANE_SERVER_PORT || defaultConfig.HUMANE_SERVER_PORT || '3000',
         globalArg('logDirectory'));
 
-      const transliteratorPlugin = globalArg('transliterator') || process.env.HUMANE_PLUGIN_TRANSLITERATOR || defaultConfig.plugins && defaultConfig.plugins.transliterator;
+      const transliteratorPlugin = globalArg('transliterator') || process.env.HUMANE_PLUGIN_TRANSLITERATOR || (defaultConfig.plugins && defaultConfig.plugins.transliterator);
 
       let transliterator = null;
       if (transliteratorPlugin) {
+          // eslint-disable-next-line import/no-dynamic-require
           const Transliterator = require(transliteratorPlugin).default;
           transliterator = new Transliterator();
       }

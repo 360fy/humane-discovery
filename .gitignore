@@ -77,6 +77,7 @@ build/Release
 node_modules
 __public__
 lib/
+build/
 
 config/production.yml
 config/staging.yml

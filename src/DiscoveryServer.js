@@ -251,6 +251,7 @@ export default class Server {
         return true;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     updateConfig(/*config*/) {
         // TODO: through event update the config
     }
