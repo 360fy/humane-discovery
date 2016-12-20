@@ -1,6 +1,6 @@
 {
   "name": "humane-discovery",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Humane Discovery",
   "repository": "git@github.com:360fy/humane-discovery.git",
   "scripts": {
